@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: Notes
+  datasource:
+    url: jdbc:h2:file:./data/DB;DATABASE_TO_UPPER=false
+    username: sa
+    password:
+  h2:
+    console:
+      path: /db
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    defer-datasource-initialization: true
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: classpath:/sql/data.sql
