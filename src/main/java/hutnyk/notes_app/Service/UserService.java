@@ -25,9 +25,13 @@ public class UserService {
         this.entityMapper = entityMapper;
     }
 
-    public List<UserDTO> getAllUsers() {
+    public List<UserDTO> getAllUsersDTO() {
         List<User> users = userRepository.findAll();
         return users.stream().map(entityMapper::userToDTO).collect(Collectors.toList());
+    }
+
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
     }
 
     public Page<UserDTO> getAllUsersWithPagination(int page, int size) {

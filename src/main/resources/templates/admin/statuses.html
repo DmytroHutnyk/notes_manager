@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Statuses</title>
+</head>
+<body>
+<h1>Statuses</h1>
+<a th:href="@{/admin/statuses/add}">Add New Status</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="status : ${statuses}">
+        <td th:text="${status.id}"></td>
+        <td th:text="${status.name}"></td>
+        <td>
+            <a th:href="@{/admin/statuses/edit/{id}(id=${status.id})}">Edit</a>
+            <a th:href="@{/admin/statuses/delete/{id}(id=${status.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/admin/menu}">Back to Menu</a>
+</body>
+</html>

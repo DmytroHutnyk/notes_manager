@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Notes</title>
+</head>
+<body>
+<h1>Notes</h1>
+<a th:href="@{/admin/notes/add}">Add New Note</a>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Finish Date</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="note : ${notes}">
+        <td th:text="${note.id}"></td>
+        <td th:text="${note.title}"></td>
+        <td th:text="${note.description}"></td>
+        <td th:text="${note.finishDate}"></td>
+        <td>
+            <a th:href="@{/admin/notes/edit/{id}(id=${note.id})}">Edit</a>
+            <a th:href="@{/admin/notes/delete/{id}(id=${note.id})}" onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/admin/menu}">Back to Menu</a>
+</body>
+</html>

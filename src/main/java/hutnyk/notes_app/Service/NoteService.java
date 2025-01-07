@@ -24,11 +24,13 @@ public class NoteService {
         this.entityMapper = entityMapper;
     }
 
-    public List<NoteDTO> getAllNotes() {
+    public List<NoteDTO> getAllNotesDTO() {
         List<Note> notes = noteRepository.findAll();
         return notes.stream().map(entityMapper::noteToDTO).collect(Collectors.toList());
     }
-
+    public List<Note> getAllNotes() {
+        return noteRepository.findAll();
+    }
     public Page<NoteDTO> getAllNotesWithPagination(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<Note> notePage = noteRepository.findAll(pageable);

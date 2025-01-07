@@ -34,6 +34,7 @@ public class EntityMapper {
     public NoteDTO noteToDTO(Note note) {
         return new NoteDTO(
                 note.getTitle(),
+                note.getDescription(),
                 note.getFinishDate(),
                 note.getUser() != null ? note.getUser().getId() : null,
                 note.getStatusSet() != null ?

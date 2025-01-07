@@ -24,9 +24,10 @@ INSERT INTO status (id, name) VALUES
 (4, 'Archived');
 
 -- Insert Notes
-INSERT INTO note (id, title, finish_date, user_id) VALUES
-    (1, 'Note 1 Title', '2025-01-10', 1),
-(2, 'Note 2 Title', NULL, 2);
+INSERT INTO note (id, title, description, finish_date, user_id) VALUES
+(1, 'Note 1 Title', 'This is the description for Note 1', '2025-01-10', 1),
+(2, 'Note 2 Title', 'This is the description for Note 2', NULL, 2);
+
 
 -- Assign Statuses to Notes
 INSERT INTO note_status (note_id, status_id) VALUES

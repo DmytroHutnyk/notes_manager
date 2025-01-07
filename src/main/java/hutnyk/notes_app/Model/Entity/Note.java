@@ -18,6 +18,10 @@ public class Note {
     @Size(max = 100, message = "Title cannot exceed 100 characters")
     private String title;
 
+    @NotBlank(message = "Description cannot be blank")
+    @Size(max = 500, message = "Description cannot exceed 500 characters")
+    private String description;
+
     @FutureOrPresent(message = "Finish date must be in the future or present")
     private Date finishDate;
 
@@ -36,11 +40,20 @@ public class Note {
     public Note() {
     }
 
-    public Note(Set<Status> statusSet, User user, Date finishDate, String title) {
+    public Note(Set<Status> statusSet, User user, Date finishDate, String title, String description) {
         this.statusSet = statusSet;
         this.user = user;
         this.finishDate = finishDate;
         this.title = title;
+        this.description = description;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Long getId() {

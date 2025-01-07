@@ -6,6 +6,7 @@ import java.util.Set;
 public class NoteDTO {
 
     private String title;
+    private String description;
     private Date finishDate;
     private Long userId;
     private Set<Long> statusSetId;
@@ -13,11 +14,12 @@ public class NoteDTO {
     public NoteDTO() {
     }
 
-    public NoteDTO(String title, Date finishDate, Long userId, Set<Long> statusSetId) {
+    public NoteDTO(String title, String description, Date finishDate,  Long userId, Set<Long> statusSetId) {
         this.title = title;
         this.finishDate = finishDate;
         this.userId = userId;
         this.statusSetId = statusSetId;
+        this.description = description;
     }
 
     public String getTitle() {
@@ -52,10 +54,19 @@ public class NoteDTO {
         this.statusSetId = statusSetId;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     public String toString() {
         return "NoteDTO{" +
                 "title='" + title + '\'' +
+                "description='" + description + '\'' +
                 ", finishDate=" + finishDate +
                 ", userId=" + userId +
                 ", statusSetId=" + statusSetId +
