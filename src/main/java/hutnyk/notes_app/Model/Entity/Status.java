@@ -3,8 +3,12 @@ package hutnyk.notes_app.Model.Entity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import java.util.Set;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import java.util.Set;
+@Data
+@NoArgsConstructor
 @Entity
 public class Status {
 
@@ -20,35 +24,8 @@ public class Status {
     @ManyToMany(mappedBy = "statusSet")
     private Set<Note> note;
 
-    public Status() {
-    }
-
     public Status(Set<Note> note, String name) {
         this.note = note;
         this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Set<Note> getNote() {
-        return note;
-    }
-
-    public void setNote(Set<Note> note) {
-        this.note = note;
     }
 }
