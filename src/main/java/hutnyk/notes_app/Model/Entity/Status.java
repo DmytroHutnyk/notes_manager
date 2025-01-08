@@ -22,10 +22,10 @@ public class Status {
     private String name;
 
     @ManyToMany(mappedBy = "statusSet")
-    private Set<Note> note;
+    private Set<Note> noteSet;
 
-    public Status(Set<Note> note, String name) {
-        this.note = note;
+    public Status(Set<Note> noteSet, String name) {
+        this.noteSet = noteSet;
         this.name = name;
     }
 }
