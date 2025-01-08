@@ -31,7 +31,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Note> notes;
+    private Set<Note> notesSet;
 
 
     @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
@@ -42,11 +42,10 @@ public class User {
     )
     private Set<Role> roleSet;
 
-    public User(Set<Role> roleSet, Set<Note> notes, String email, String password, String username) {
+    public User(Set<Role> roleSet, Set<Note> notesSet, String email, String username) {
         this.roleSet = roleSet;
-        this.notes = notes;
+        this.notesSet = notesSet;
         this.email = email;
-        this.password = password;
         this.username = username;
     }
 }
