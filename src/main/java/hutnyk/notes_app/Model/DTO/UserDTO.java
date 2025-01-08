@@ -14,6 +14,6 @@ public class UserDTO {
     private Long id;
     private String username;
     private String email;
-    private Set<Long> notesId;
+    private Set<Long> notesSetId;
     private Set<Long> roleSetId;
 }
