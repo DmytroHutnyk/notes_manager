@@ -30,7 +30,7 @@ public class UserService {
         return users.stream().map(userMapper::userToDTO).collect(Collectors.toList());
     }
 
-    public List<User> getAllUsers() {
+    public List<User> getAllUsersAdmin() {
         return userRepository.findAll();
     }
 
