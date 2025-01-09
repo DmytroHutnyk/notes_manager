@@ -20,6 +20,11 @@ spring:
     init:
       mode: always
       data-locations: classpath:/data.sql
+server:
+  servlet:
+    session:
+      persistent: false
+
 #logging:
 #  level:
 #    org:
