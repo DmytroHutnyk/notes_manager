@@ -1,8 +1,11 @@
 package hutnyk.notes_app.Controller;
 
-import hutnyk.notes_app.Model.Entity.Role;
-import hutnyk.notes_app.Model.Entity.User;
-import hutnyk.notes_app.Service.Mapper.EntityMapper;
+import hutnyk.notes_app.Model.DTO.RoleDTO;
+import hutnyk.notes_app.Service.Interface.INoteService;
+import hutnyk.notes_app.Service.Interface.IRoleService;
+import hutnyk.notes_app.Service.Interface.IStatusService;
+import hutnyk.notes_app.Service.Interface.IUserService;
+import hutnyk.notes_app.Service.Mapper.RoleMapper;
 import hutnyk.notes_app.Service.NoteService;
 import hutnyk.notes_app.Service.RoleService;
 import hutnyk.notes_app.Service.StatusService;
@@ -17,18 +20,18 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final RoleService roleService;
-    private final UserService userService;
-    private final NoteService noteService;
-    private final StatusService statusService;
-    private final EntityMapper entityMapper;
+    private final IRoleService roleService;
+    private final IUserService userService;
+    private final INoteService noteService;
+    private final IStatusService statusService;
+    private final RoleMapper roleMapper;
 
-    public AdminController(RoleService roleService, UserService userService, NoteService noteService, StatusService statusService, EntityMapper entityMapper) {
+    public AdminController(IRoleService roleService, IUserService userService, INoteService noteService, IStatusService statusService, RoleMapper roleMapper) {
         this.roleService = roleService;
         this.userService = userService;
         this.noteService = noteService;
         this.statusService = statusService;
-        this.entityMapper = entityMapper;
+        this.roleMapper = roleMapper;
     }
     // menu
     @GetMapping("/menu")
@@ -45,12 +48,12 @@ public class AdminController {
 
     @GetMapping("/roles/add")
     public String addRoleForm(Model model) {
-        model.addAttribute("role", new Role());
+        model.addAttribute("role", new RoleDTO());
         return "admin/role_form";
     }
 
     @PostMapping("/roles/create")
-    public String addRole(@Valid @ModelAttribute Role role, BindingResult bindingResult) {
+    public String addRole(@Valid @ModelAttribute RoleDTO role, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "admin/role_form";
         }
@@ -66,7 +69,7 @@ public class AdminController {
     }
 
     @PostMapping("/roles/edit/{id}")
-    public String editRole(@PathVariable Long id, @ModelAttribute Role role) {
+    public String editRole(@PathVariable Long id, @ModelAttribute RoleDTO role) {
         role.setId(id);
         roleService.addRole(role);
         return "redirect:/admin/roles";
@@ -80,69 +83,69 @@ public class AdminController {
 
 
 
-
-    @GetMapping("/users")
-    public String listUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "admin/users";
-    }
-
-    @GetMapping("/notes")
-    public String listNotes(Model model) {
-        model.addAttribute("notes", noteService.getAllNotes());
-        return "admin/notes";
-    }
-
-    @GetMapping("/statuses")
-    public String listStatuses(Model model) {
-        model.addAttribute("statuses", statusService.getAllStatuses());
-        return "admin/statuses";
-    }
-
-    @GetMapping("/detailed/note")
-    public String detailedNotes(Model model) {
-        model.addAttribute("notes", noteService.getAllNotes());
-        return "admin/detailed_note";
-    }
-
-    @GetMapping("/detailed/user")
-    public String detailedUsers(Model model) {
-        model.addAttribute("users", userService.getAllUsers());
-        return "admin/detailed_user";
-    }
-
-
-
-    @GetMapping("/users/add")
-    public String addUserForm(Model model) {
-        model.addAttribute("user", new User());
-        return "admin/user_form";
-    }
-
-    @PostMapping("/users/add")
-    public String addUser(@ModelAttribute User user) {
-        userService.addUser(entityMapper.userToDTO(user));
-        return "redirect:/admin/users";
-    }
-
-    @GetMapping("/users/edit/{id}")
-    public String editUserForm(@PathVariable Long id, Model model) {
-        model.addAttribute("user", userService.getUserById(id));
-        return "admin/user_form";
-    }
-
-    @PostMapping("/users/edit/{id}")
-    public String editUser(@PathVariable Long id, @ModelAttribute User user) {
-        user.setId(id);
-        userService.addUser(entityMapper.userToDTO(user));
-        return "redirect:/admin/users";
-    }
-
-    @GetMapping("/users/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userService.deleteUserById(id);
-        return "redirect:/admin/users";
-    }
+//
+//    @GetMapping("/users")
+//    public String listUsers(Model model) {
+//        model.addAttribute("users", userService.getAllUsers());
+//        return "admin/users";
+//    }
+//
+//    @GetMapping("/notes")
+//    public String listNotes(Model model) {
+//        model.addAttribute("notes", noteService.getAllNotes());
+//        return "admin/notes";
+//    }
+//
+//    @GetMapping("/statuses")
+//    public String listStatuses(Model model) {
+//        model.addAttribute("statuses", statusService.getAllStatuses());
+//        return "admin/statuses";
+//    }
+//
+//    @GetMapping("/detailed/note")
+//    public String detailedNotes(Model model) {
+//        model.addAttribute("notes", noteService.getAllNotes());
+//        return "admin/detailed_note";
+//    }
+//
+//    @GetMapping("/detailed/user")
+//    public String detailedUsers(Model model) {
+//        model.addAttribute("users", userService.getAllUsers());
+//        return "admin/detailed_user";
+//    }
+//
+//
+//
+//    @GetMapping("/users/add")
+//    public String addUserForm(Model model) {
+//        model.addAttribute("user", new User());
+//        return "admin/user_form";
+//    }
+//
+//    @PostMapping("/users/add")
+//    public String addUser(@ModelAttribute User user) {
+//        userService.addUser(entityMapper.userToDTO(user));
+//        return "redirect:/admin/users";
+//    }
+//
+//    @GetMapping("/users/edit/{id}")
+//    public String editUserForm(@PathVariable Long id, Model model) {
+//        model.addAttribute("user", userService.getUserById(id));
+//        return "admin/user_form";
+//    }
+//
+//    @PostMapping("/users/edit/{id}")
+//    public String editUser(@PathVariable Long id, @ModelAttribute User user) {
+//        user.setId(id);
+//        userService.addUser(entityMapper.userToDTO(user));
+//        return "redirect:/admin/users";
+//    }
+//
+//    @GetMapping("/users/delete/{id}")
+//    public String deleteUser(@PathVariable Long id) {
+//        userService.deleteUserById(id);
+//        return "redirect:/admin/users";
+//    }
 
 
 }
