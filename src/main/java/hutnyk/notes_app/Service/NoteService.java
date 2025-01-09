@@ -3,6 +3,7 @@ package hutnyk.notes_app.Service;
 import hutnyk.notes_app.Model.DTO.NoteDTO;
 import hutnyk.notes_app.Model.Entity.Note;
 import hutnyk.notes_app.Repository.INoteRepository;
+import hutnyk.notes_app.Service.Interface.INoteService;
 import hutnyk.notes_app.Service.Mapper.NoteMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 @Service
-public class NoteService {
+public class NoteService implements INoteService {
 
     private final INoteRepository noteRepository;
     private final NoteMapper noteMapper;

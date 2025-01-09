@@ -3,6 +3,7 @@ package hutnyk.notes_app.Service;
 import hutnyk.notes_app.Model.DTO.UserDTO;
 import hutnyk.notes_app.Model.Entity.User;
 import hutnyk.notes_app.Repository.IUserRepository;
+import hutnyk.notes_app.Service.Interface.IUserService;
 import hutnyk.notes_app.Service.Mapper.UserMapper;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService {
+public class UserService implements IUserService {
 
     private final IUserRepository userRepository;
     private final UserMapper userMapper;

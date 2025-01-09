@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class StatusService {
+public class StatusService implements IStatusService{
 
     private final IStatusRepository statusRepository;
     private final StatusMapper statusMapper;
