@@ -5,11 +5,6 @@ import hutnyk.notes_app.Service.Interface.INoteService;
 import hutnyk.notes_app.Service.Interface.IRoleService;
 import hutnyk.notes_app.Service.Interface.IStatusService;
 import hutnyk.notes_app.Service.Interface.IUserService;
-import hutnyk.notes_app.Service.Mapper.RoleMapper;
-import hutnyk.notes_app.Service.NoteService;
-import hutnyk.notes_app.Service.RoleService;
-import hutnyk.notes_app.Service.StatusService;
-import hutnyk.notes_app.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,22 +12,25 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/admin")
+//@RequestMapping("/admin")
 public class AdminController {
 
-    private final IRoleService roleService;
     private final IUserService userService;
     private final INoteService noteService;
     private final IStatusService statusService;
-    private final RoleMapper roleMapper;
 
-    public AdminController(IRoleService roleService, IUserService userService, INoteService noteService, IStatusService statusService, RoleMapper roleMapper) {
-        this.roleService = roleService;
+
+    public AdminController( IUserService userService, INoteService noteService, IStatusService statusService) {
         this.userService = userService;
         this.noteService = noteService;
         this.statusService = statusService;
-        this.roleMapper = roleMapper;
     }
+
+//    @GetMapping("/login")
+//    public String login(){
+//        return "login";
+//    }
+
     // menu
     @GetMapping("/menu")
     public String showMenu() {
@@ -40,46 +38,46 @@ public class AdminController {
     }
 
     //roles
-    @GetMapping("/roles")
-    public String listRoles(Model model) {
-        model.addAttribute("roles", roleService.getAllRoles());
-        return "admin/roles";
-    }
-
-    @GetMapping("/roles/add")
-    public String addRoleForm(Model model) {
-        model.addAttribute("role", new RoleDTO());
-        return "admin/role_form";
-    }
-
-    @PostMapping("/roles/create")
-    public String addRole(@Valid @ModelAttribute RoleDTO role, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "admin/role_form";
-        }
-        System.out.println("Role ID before save: " + role.getId());
-        roleService.addRole(role);
-        return "redirect:/admin/roles";
-    }
-
-    @GetMapping("/roles/edit/{id}")
-    public String editRoleForm(@PathVariable Long id, Model model) {
-        model.addAttribute("role", roleService.getRoleById(id));
-        return "admin/role_form";
-    }
-
-    @PostMapping("/roles/edit/{id}")
-    public String editRole(@PathVariable Long id, @ModelAttribute RoleDTO role) {
-        role.setId(id);
-        roleService.addRole(role);
-        return "redirect:/admin/roles";
-    }
-
-    @GetMapping("/roles/delete/{id}")
-    public String deleteRole(@PathVariable Long id) {
-        roleService.deleteRoleById(id);
-        return "redirect:/admin/roles";
-    }
+//    @GetMapping("/admin/roles")
+//    public String listRoles(Model model) {
+//        model.addAttribute("roles", roleService.getAllRoles());
+//        return "admin/roles";
+//    }
+//
+//    @GetMapping("/admin/roles/add")
+//    public String addRoleForm(Model model) {
+//        model.addAttribute("role", new RoleDTO());
+//        return "admin/role_form";
+//    }
+//
+//    @PostMapping("/admin/roles/create")
+//    public String addRole(@Valid @ModelAttribute RoleDTO role, BindingResult bindingResult) {
+//        if (bindingResult.hasErrors()) {
+//            return "admin/role_form";
+//        }
+//        System.out.println("Role ID before save: " + role.getId());
+//        roleService.addRole(role);
+//        return "redirect:/admin/roles";
+//    }
+//
+//    @GetMapping("/admin/roles/edit/{id}")
+//    public String editRoleForm(@PathVariable Long id, Model model) {
+//        model.addAttribute("role", roleService.getRoleById(id));
+//        return "admin/role_form";
+//    }
+//
+//    @PostMapping("/admin/roles/edit/{id}")
+//    public String editRole(@PathVariable Long id, @ModelAttribute RoleDTO role) {
+//        role.setId(id);
+//        roleService.addRole(role);
+//        return "redirect:/admin/roles";
+//    }
+//
+//    @GetMapping("/admin/roles/delete/{id}")
+//    public String deleteRole(@PathVariable Long id) {
+//        roleService.deleteRoleById(id);
+//        return "redirect:/admin/roles";
+//    }
 
 
 

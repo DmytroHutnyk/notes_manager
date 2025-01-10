@@ -1,4 +1,8 @@
 spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
   application:
     name: Notes
   datasource:
@@ -16,17 +20,17 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  sql:
-    init:
-      mode: always
-      data-locations: classpath:/data.sql
+#  sql:
+#    init:
+#      mode: always
+#      data-locations: classpath:/data.sql
 server:
   servlet:
     session:
       persistent: false
 
-#logging:
-#  level:
-#    org:
-#      springframework:
-#        web: debug
+logging:
+  level:
+    org:
+      springframework:
+        web: debug

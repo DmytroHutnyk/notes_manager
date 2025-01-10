@@ -15,5 +15,4 @@ public class UserDTO {
     private String username;
     private String email;
     private Set<Long> notesSetId;
-    private Set<Long> roleSetId;
 }

@@ -5,7 +5,7 @@ import hutnyk.notes_app.Model.Entity.Note;
 import hutnyk.notes_app.Model.Entity.Role;
 import hutnyk.notes_app.Model.Entity.User;
 import hutnyk.notes_app.Repository.INoteRepository;
-import hutnyk.notes_app.Repository.IRoleRepository;
+
 import jakarta.persistence.EntityNotFoundException;
 import lombok.Data;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
 
-    private final IRoleRepository roleRepository;
+//    private final IRoleRepository roleRepository;
     private final INoteRepository noteRepository;
 
     public UserDTO userToDTO(User user){
@@ -26,24 +26,18 @@ public class UserMapper {
                 .notesSetId(user.getNotesSet() != null ?
                         user.getNotesSet().stream().map(Note::getId).collect(Collectors.toSet()) :
                         null)
-                .roleSetId(user.getRoleSet() != null ?
-                        user.getRoleSet().stream().map(Role::getId).collect(Collectors.toSet()) :
-                        null)
                 .build();
     }
 
     public User dtotoUser(UserDTO userDTO){
         return new User(
-                userDTO.getRoleSetId() != null ?
-                        userDTO.getRoleSetId().stream().map(roleId -> roleRepository.findById(roleId).orElseThrow(
-                                () -> new EntityNotFoundException("Role not found with id: " + roleId))).collect(Collectors.toSet()) :
-                    null,
                 userDTO.getNotesSetId() != null ?
                         userDTO.getNotesSetId().stream().map(noteId -> noteRepository.findById(noteId).orElseThrow(
                                 () -> new EntityNotFoundException("Note not found with id: " + noteId))).collect(Collectors.toSet()) :
                         null,
                 userDTO.getEmail(),
-                userDTO.getUsername()
+                userDTO.getUsername(),
+                true
         );
     }
 }
