@@ -12,6 +12,7 @@ spring:
   h2:
     console:
       path: /db
+      enabled: true
   jpa:
     hibernate:
       ddl-auto: create-drop
@@ -20,10 +21,10 @@ spring:
     properties:
       hibernate:
         format_sql: true
-#  sql:
-#    init:
-#      mode: always
-#      data-locations: classpath:/data.sql
+  sql:
+    init:
+      mode: always
+      data-locations: classpath:/data.sql
 server:
   servlet:
     session:

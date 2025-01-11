@@ -1,4 +1,4 @@
-package hutnyk.notes_app.Config;
+package hutnyk.notes_app.Security.Config;
 
 import lombok.SneakyThrows;
 import org.springframework.context.annotation.Bean;
@@ -6,12 +6,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @EnableWebSecurity
 @EnableMethodSecurity
 @Configuration
-public class SecurityConfig {
+public class SecurityConfig  {
     @Bean
     @SneakyThrows
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
@@ -19,8 +21,11 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorizeRequest ->
                         authorizeRequest
                                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/auth/**", "/error").permitAll()
+                                .requestMatchers("/auth/**", "/error", "/db/**").permitAll()
                                 .anyRequest().authenticated()
+                )
+                .csrf(csrf -> csrf
+                        .ignoringRequestMatchers("/db/**")
                 )
                 .formLogin(formLogin ->
                         formLogin
@@ -35,5 +40,10 @@ public class SecurityConfig {
                                 .logoutSuccessUrl("/auth/login")
                         );
         return http.build();
+    }
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/db/**"));
     }
 }

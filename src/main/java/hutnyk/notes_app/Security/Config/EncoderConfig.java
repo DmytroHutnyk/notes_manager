@@ -1,4 +1,4 @@
-package hutnyk.notes_app.Config;
+package hutnyk.notes_app.Security.Config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
