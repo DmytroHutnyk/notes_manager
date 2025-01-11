@@ -14,7 +14,7 @@ public interface IUserService {
     void deleteUserById(Long id);
     UserDTO getUserById(Long id);
     Page<UserDTO> getUsersWithPaginationAndSorting(int page, int size, String sortBy, String sortDir);
-
-
+    User getUserByIdAdmin(Long id);
+    User saveUser(User user);
 
 }

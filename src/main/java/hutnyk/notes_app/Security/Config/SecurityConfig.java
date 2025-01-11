@@ -20,8 +20,7 @@ public class SecurityConfig  {
         http
                 .authorizeHttpRequests(authorizeRequest ->
                         authorizeRequest
-                                .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/auth/**", "/error", "/db/**").permitAll()
+                                .requestMatchers("/auth/**","/admin/**", "/error", "/db/**", "/", "/save-user/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf
@@ -46,4 +45,16 @@ public class SecurityConfig  {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/db/**"));
     }
+
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring()
+//                .requestMatchers("/db/**", "/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/vendor/**","/fonts/**");
+//    }
 }
+//.authorizeHttpRequests(authorizeRequest ->
+//        authorizeRequest
+//        .requestMatchers("/admin/**").hasRole("ADMIN")
+//                                .requestMatchers("/auth/**", "/error", "/db/**", "/", "/save-user/**").permitAll()
+//                                .anyRequest().authenticated()
+//                )

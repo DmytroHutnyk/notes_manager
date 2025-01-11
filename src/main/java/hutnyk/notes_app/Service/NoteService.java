@@ -45,6 +45,16 @@ public class NoteService implements INoteService {
         return noteMapper.noteToDTO(savedNote);
     }
 
+    public Note getNoteByIdAdmin(Long id){
+        return noteRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Note does not exists with id: " + id)
+        );
+
+    }
+    public Note addNoteAdmin(Note note) {
+        return noteRepository.save(note);
+    }
+
     public void deleteNoteById(Long id) {
         if (!noteRepository.existsById(id)) {
             throw new EntityNotFoundException("Note not found with id: " + id);

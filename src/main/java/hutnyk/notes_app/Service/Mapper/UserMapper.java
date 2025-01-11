@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 @Service
 public class UserMapper {
 
-//    private final IRoleRepository roleRepository;
     private final INoteRepository noteRepository;
 
     public UserDTO userToDTO(User user){
@@ -26,17 +25,21 @@ public class UserMapper {
                 .notesSetId(user.getNotesSet() != null ?
                         user.getNotesSet().stream().map(Note::getId).collect(Collectors.toSet()) :
                         null)
+                .role(user.getRole().toString())
+                .isEnable(user.isEnable())
                 .build();
     }
 
     public User dtotoUser(UserDTO userDTO){
         return new User(
+                userDTO.getId(),
+                userDTO.getUsername(),
+                userDTO.getEmail(),
                 userDTO.getNotesSetId() != null ?
                         userDTO.getNotesSetId().stream().map(noteId -> noteRepository.findById(noteId).orElseThrow(
                                 () -> new EntityNotFoundException("Note not found with id: " + noteId))).collect(Collectors.toSet()) :
                         null,
-                userDTO.getEmail(),
-                userDTO.getUsername(),
+                Role.valueOf(userDTO.getRole()),
                 true
         );
     }

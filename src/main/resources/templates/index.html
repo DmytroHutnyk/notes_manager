@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .button-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        form {
+            margin: 0;
+        }
+
+        button {
+            background-color: #ffdd00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 150px;
+        }
+
+        button:hover {
+            background-color: #aa992e;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to Notes Application</h1>
+
+    <div class="button-container">
+        <form action="/auth/registration" method="get">
+            <button type="submit">Register</button>
+        </form>
+
+        <form action="/auth/login" method="get">
+            <button type="submit">Login</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit from</title>
+</head>
+<body>
+<form method="post" action="/admin/users/add/save-user" th:object="${user}">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+
+    <label for="username">Username:</label>
+    <input type="text" id="username" th:field="*{username}" placeholder="Enter username" required />
+
+    <label for="password">Password:</label>
+    <input type="text" id="password" th:field="*{password}" placeholder="Enter password" required />
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" th:field="*{email}" placeholder="Enter email" required />
+
+    <label for="email">Role:</label>
+    <input type="text" id="role" th:field="*{role}" placeholder="Enter role" required />
+
+    <div class="form-buttons">
+        <button type="submit" class="save-button">Save</button>
+        <a href="/admin/users" class="cancel-button">Cancel</a>
+    </div>
+</form>
+</body>
+</html>

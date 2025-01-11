@@ -10,8 +10,8 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "users")
 public class User {
@@ -35,18 +35,38 @@ public class User {
     @Column(nullable = false)
     private String email;
 
-    @Column(nullable = false)
-    private boolean isEnable;
-
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    @Column(nullable = false) //TODO hava a look
+//    @Column(nullable = false) //TODO hava a look
     private Set<Note> notesSet;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
-//    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
+    @Column(nullable = false)
+    private boolean isEnable;
+
+    public User(Long id, String username, String email, Set<Note> notesSet, Role role, boolean isEnable) {
+        this.id = id;
+        this.username = username;
+        this.email = email;
+        this.notesSet = notesSet;
+        this.role = role;
+        this.isEnable = isEnable;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                ", isEnable=" + isEnable +
+                '}';
+    }
+    //    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
 //    @JoinTable(
 //            name = "user_role",
 //            joinColumns = @JoinColumn(name = "user_id"),
@@ -54,10 +74,7 @@ public class User {
 //    )
 //    private Set<Role> roleSet;
 
-    public User(Set<Note> notesSet, String email, String username, boolean isEnable) {
-        this.notesSet = notesSet;
-        this.email = email;
-        this.username = username;
-        this.isEnable = isEnable;
-    }
+
+
+
 }

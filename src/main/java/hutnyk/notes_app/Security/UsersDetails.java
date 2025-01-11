@@ -33,6 +33,9 @@ public class UsersDetails implements UserDetails {
         return user.getUsername();
     }
 
+    public Long getId() {
+        return user.getId();
+    }
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -50,6 +53,6 @@ public class UsersDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return true; //TODO
     }
 }

@@ -1,5 +1,6 @@
 package hutnyk.notes_app.Model.DTO;
 
+import hutnyk.notes_app.Model.Entity.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,6 @@ public class UserDTO {
     private String username;
     private String email;
     private Set<Long> notesSetId;
+    private String role;
+    private boolean isEnable;
 }

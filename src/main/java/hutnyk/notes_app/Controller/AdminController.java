@@ -1,149 +1,152 @@
 package hutnyk.notes_app.Controller;
 
-import hutnyk.notes_app.Model.DTO.RoleDTO;
+import hutnyk.notes_app.Model.Entity.Note;
+import hutnyk.notes_app.Model.Entity.User;
+import hutnyk.notes_app.Security.UsersDetails;
 import hutnyk.notes_app.Service.Interface.INoteService;
-import hutnyk.notes_app.Service.Interface.IRoleService;
 import hutnyk.notes_app.Service.Interface.IStatusService;
 import hutnyk.notes_app.Service.Interface.IUserService;
+import hutnyk.notes_app.util.UserValidator;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
-//@RequestMapping("/admin")
+@RequiredArgsConstructor
+@RequestMapping("/admin")
 public class AdminController {
 
     private final IUserService userService;
     private final INoteService noteService;
     private final IStatusService statusService;
+    private final UserValidator userValidator;
 
 
-    public AdminController( IUserService userService, INoteService noteService, IStatusService statusService) {
-        this.userService = userService;
-        this.noteService = noteService;
-        this.statusService = statusService;
-    }
-
-//    @GetMapping("/login")
-//    public String login(){
-//        return "login";
-//    }
-
-    // menu
-    @GetMapping("/menu")
+    @GetMapping("/")
     public String showMenu() {
-        return "admin/menu";
+        return "admin/menuAdmin";
     }
 
-    //roles
-//    @GetMapping("/admin/roles")
-//    public String listRoles(Model model) {
-//        model.addAttribute("roles", roleService.getAllRoles());
-//        return "admin/roles";
-//    }
-//
-//    @GetMapping("/admin/roles/add")
-//    public String addRoleForm(Model model) {
-//        model.addAttribute("role", new RoleDTO());
-//        return "admin/role_form";
-//    }
-//
-//    @PostMapping("/admin/roles/create")
-//    public String addRole(@Valid @ModelAttribute RoleDTO role, BindingResult bindingResult) {
-//        if (bindingResult.hasErrors()) {
-//            return "admin/role_form";
-//        }
-//        System.out.println("Role ID before save: " + role.getId());
-//        roleService.addRole(role);
-//        return "redirect:/admin/roles";
-//    }
-//
-//    @GetMapping("/admin/roles/edit/{id}")
-//    public String editRoleForm(@PathVariable Long id, Model model) {
-//        model.addAttribute("role", roleService.getRoleById(id));
-//        return "admin/role_form";
-//    }
-//
-//    @PostMapping("/admin/roles/edit/{id}")
-//    public String editRole(@PathVariable Long id, @ModelAttribute RoleDTO role) {
-//        role.setId(id);
-//        roleService.addRole(role);
-//        return "redirect:/admin/roles";
-//    }
-//
-//    @GetMapping("/admin/roles/delete/{id}")
-//    public String deleteRole(@PathVariable Long id) {
-//        roleService.deleteRoleById(id);
-//        return "redirect:/admin/roles";
-//    }
+                                                    //USERS
+    @GetMapping("/users")
+    public String listUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsersAdmin());
+        return "admin/users";
+    }
+    @GetMapping("/users/add")
+    public String addUser(Model model) {
+        model.addAttribute("user", new User());
+        return "admin/addUserForm";
+    }
+
+    @PostMapping("/users/add/save-user")
+    public String addUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+            return "redirect:/admin/users";
+        }
+
+        user.setEnable(true);
+        userService.saveUser(user);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/users/edit/{id}")
+    public String editUser(@PathVariable Long id, Model model ) {
+        model.addAttribute("user", userService.getUserByIdAdmin(id));
+        return "admin/editUserForm";
+    }
+
+    @PostMapping("/users/edit/save-user")
+    public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+            return "redirect:/admin/users";
+        }
+        User existingUser = userService.getUserByIdAdmin(user.getId());
+
+        existingUser.setUsername(user.getUsername());
+        existingUser.setPassword(user.getPassword());
+        existingUser.setEmail(user.getEmail());
+
+        userService.saveUser(existingUser);
+        return "redirect:/admin/users";
+    }
+
+    @GetMapping("/users/delete/{id}")
+    public String deleteUser(@PathVariable Long id, HttpServletRequest request, HttpServletResponse response) {
+        userService.deleteUserById(id);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        UsersDetails userDetails = (UsersDetails) authentication.getPrincipal();
+        if(userDetails.getId().equals(id)){
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
+            return "redirect:/";
+        }
+        return "redirect:/admin/users";
+    }
 
 
+            // NOTES
+    @GetMapping("/notes")
+    public String listNotes(Model model) {
+        model.addAttribute("notes", noteService.getAllNotesAdmin());
+        return "admin/notes";
+    }
 
-//
-//    @GetMapping("/users")
-//    public String listUsers(Model model) {
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "admin/users";
-//    }
-//
-//    @GetMapping("/notes")
-//    public String listNotes(Model model) {
-//        model.addAttribute("notes", noteService.getAllNotes());
-//        return "admin/notes";
-//    }
-//
-//    @GetMapping("/statuses")
-//    public String listStatuses(Model model) {
-//        model.addAttribute("statuses", statusService.getAllStatuses());
-//        return "admin/statuses";
-//    }
-//
-//    @GetMapping("/detailed/note")
-//    public String detailedNotes(Model model) {
-//        model.addAttribute("notes", noteService.getAllNotes());
-//        return "admin/detailed_note";
-//    }
-//
-//    @GetMapping("/detailed/user")
-//    public String detailedUsers(Model model) {
-//        model.addAttribute("users", userService.getAllUsers());
-//        return "admin/detailed_user";
-//    }
-//
-//
-//
-//    @GetMapping("/users/add")
-//    public String addUserForm(Model model) {
-//        model.addAttribute("user", new User());
-//        return "admin/user_form";
-//    }
-//
-//    @PostMapping("/users/add")
-//    public String addUser(@ModelAttribute User user) {
-//        userService.addUser(entityMapper.userToDTO(user));
-//        return "redirect:/admin/users";
-//    }
-//
-//    @GetMapping("/users/edit/{id}")
-//    public String editUserForm(@PathVariable Long id, Model model) {
-//        model.addAttribute("user", userService.getUserById(id));
-//        return "admin/user_form";
-//    }
-//
-//    @PostMapping("/users/edit/{id}")
-//    public String editUser(@PathVariable Long id, @ModelAttribute User user) {
-//        user.setId(id);
-//        userService.addUser(entityMapper.userToDTO(user));
-//        return "redirect:/admin/users";
-//    }
-//
-//    @GetMapping("/users/delete/{id}")
-//    public String deleteUser(@PathVariable Long id) {
-//        userService.deleteUserById(id);
-//        return "redirect:/admin/users";
-//    }
+    @GetMapping("/notes/add")
+    public String addNote(Model model) {
+        model.addAttribute("note", new Note());
+        return "admin/addNoteForm";
+    }
+
+    @PostMapping("/notes/add/save-note")
+    public String saveNote(@Valid @ModelAttribute Note note, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+            return "redirect:/admin/notes";
+        }
+        noteService.addNoteAdmin(note);
+        return "redirect:/admin/notes";
+    }
+
+    @GetMapping("/notes/edit/{id}")
+    public String editNote(@PathVariable Long id, Model model){
+        model.addAttribute("note", noteService.getNoteById(id));
+        return "admin/editNoteForm";
+    }
 
 
+    @PostMapping("/notes/edit/save-note")
+    public String saveEditNote(@Valid @ModelAttribute Note note, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+            return "redirect:/admin/notes";
+        }
+        noteService.addNoteAdmin(note);
+        return "redirect:/admin/notes";
+    }
+
+    @GetMapping("/notes/delete/{id}")
+    public String deleteNote(@PathVariable Long id){
+        noteService.deleteNoteById(id);
+        return "redirect:/admin/notes";
+    }
 }

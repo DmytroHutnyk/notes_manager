@@ -5,6 +5,7 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.Set;
@@ -26,7 +27,9 @@ public class Note {
     @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
 
-    @FutureOrPresent(message = "Finish date must be in the future or present")
+
+//    @FutureOrPresent(message = "Finish date must be in the future or present")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date finishDate;
 
     @ManyToOne()

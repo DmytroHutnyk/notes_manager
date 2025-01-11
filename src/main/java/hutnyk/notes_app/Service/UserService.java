@@ -58,6 +58,7 @@ public class UserService implements IUserService, UserDetailsService {
         return userRepository.save(user);
     }
 
+
     public void deleteUserById(Long id) {
         if (!userRepository.existsById(id)) {
             throw new EntityNotFoundException("User not found with id: " + id);
@@ -72,6 +73,12 @@ public class UserService implements IUserService, UserDetailsService {
         return userMapper.userToDTO(user);
     }
 
+    public User getUserByIdAdmin(Long id) {
+        return userRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("User not found with id: " + id)
+        );
+    }
+
     public Page<UserDTO> getUsersWithPaginationAndSorting(int page, int size, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
@@ -83,7 +90,7 @@ public class UserService implements IUserService, UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user =  userRepository.findByUsername(username);
         if(user.isEmpty()){
-            throw new UsernameNotFoundException("User not found + " + username);
+            throw new UsernameNotFoundException("User not found with username + " + username);
         }
         return new UsersDetails(user.get());
     }

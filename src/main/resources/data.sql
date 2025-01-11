@@ -2,7 +2,7 @@
 -- Insert Users
 INSERT INTO users (username, password, email, is_enable, role) VALUES
 ('user1', '$2a$10$hjGxvkN0w.TCcjcFNQNiGOtBZlBaSwwkvcBgbvhgUWLLcxfz8oplS', 'user1@example.com', TRUE, 'ROLE_USER'),
-('user2', '$2a$10$88uhV4Gcc6oErp.hQfXuJumNeLmEjAY9GK5z8ERgF9fDFk8G.KlCS', 'user2@example.com', TRUE, 'ROLE_USER'),
+('user2', '$2a$10$88uhV4Gcc6oErp.hQfXuJumNeLmEjAY9GK5z8ERgF9fDFk8G.KlCS', 'user2@example.com', TRUE, 'ROLE_ADMIN'),
 ('admin', '$2a$10$zInLivtLP/C1VXF9OuRtCu6qXxF3mkpzQtdt9xJ21Bde.rXBPym.6', 'admin@example.com', TRUE, 'ROLE_USER');
 
 
