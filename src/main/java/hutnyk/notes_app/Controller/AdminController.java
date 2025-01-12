@@ -1,8 +1,11 @@
 package hutnyk.notes_app.Controller;
 
+import hutnyk.notes_app.Model.DTO.DetailedNoteDTO;
+import hutnyk.notes_app.Model.DTO.StatusDTO;
 import hutnyk.notes_app.Model.Entity.Note;
 import hutnyk.notes_app.Model.Entity.User;
 import hutnyk.notes_app.Security.UsersDetails;
+import hutnyk.notes_app.Service.Interface.IDetailedNoteService;
 import hutnyk.notes_app.Service.Interface.INoteService;
 import hutnyk.notes_app.Service.Interface.IStatusService;
 import hutnyk.notes_app.Service.Interface.IUserService;
@@ -13,22 +16,23 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/admin")
 public class AdminController {
-
     private final IUserService userService;
     private final INoteService noteService;
     private final IStatusService statusService;
     private final UserValidator userValidator;
+    private final IDetailedNoteService detailedNoteService;
 
 
     @GetMapping("/")
@@ -42,6 +46,7 @@ public class AdminController {
         model.addAttribute("users", userService.getAllUsersAdmin());
         return "admin/users";
     }
+
     @GetMapping("/users/add")
     public String addUser(Model model) {
         model.addAttribute("user", new User());
@@ -100,7 +105,7 @@ public class AdminController {
     }
 
 
-            // NOTES
+                                                // NOTES
     @GetMapping("/notes")
     public String listNotes(Model model) {
         model.addAttribute("notes", noteService.getAllNotesAdmin());
@@ -131,7 +136,6 @@ public class AdminController {
         return "admin/editNoteForm";
     }
 
-
     @PostMapping("/notes/edit/save-note")
     public String saveEditNote(@Valid @ModelAttribute Note note, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
@@ -148,5 +152,63 @@ public class AdminController {
     public String deleteNote(@PathVariable Long id){
         noteService.deleteNoteById(id);
         return "redirect:/admin/notes";
+    }
+
+
+                                        // Statuses
+    @GetMapping("/statuses")
+    public String getStatuses(Model model){
+        model.addAttribute("statuses", statusService.getAllStatuses());
+        return "admin/statuses";
+    }
+
+    @GetMapping("/statuses/add")
+    public String addStatus(Model model){
+        model.addAttribute("status", new StatusDTO());
+        return "admin/addStatusForm";
+    }
+
+    @PostMapping("/statuses/add/save-status")
+    public String saveStatus(@Valid @ModelAttribute StatusDTO status, BindingResult bindingResult){
+        if(statusService.findByName(status.getName()) != null || bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+            return "redirect:/admin/statuses";
+        }
+        statusService.addStatus(status);
+        return "redirect:/admin/statuses";
+    }
+
+    @GetMapping("/statuses/edit/{id}")
+    public String editStatus(@PathVariable Long id, Model model){
+        model.addAttribute("status", statusService.getStatusById(id));
+        return "admin/editStatusForm";
+    }
+
+    @PostMapping("/statuses/edit/save-status")
+    public String saveEditStatus(@Valid @ModelAttribute StatusDTO statusDTO, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            bindingResult.getAllErrors().forEach(error -> {
+                System.out.println("Error: " + error.getDefaultMessage());
+            });
+            return "redirect:/admin/statuses";
+        }
+        statusService.addStatus(statusDTO);
+        return "redirect:/admin/statuses";
+    }
+
+    @GetMapping("/statuses/delete/{id}")
+    public String deleteStatus(@PathVariable Long id){
+        statusService.deleteStatusById(id);
+        return "redirect:/admin/statuses";
+    }
+
+
+                                                                             //note details
+    @GetMapping("/detailed/notes")
+    public String getNotesDetails(Model model){
+        model.addAttribute("notes", detailedNoteService.getAllNotesWithDetails());
+        return "/admin/detailedNotes";
     }
 }

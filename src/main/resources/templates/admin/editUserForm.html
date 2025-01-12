@@ -3,6 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit from</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            display: flex;
+            justify-content: flex-start;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        input[type="email"],
+        input[type="text"],
+        input[type="date"] {
+            width: 95%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-buttons {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+        }
+
+        button.save-button,
+        a.cancel-button {
+            background-color: #ffdd00;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            flex: 1;
+        }
+
+        button.save-button:hover,
+        a.cancel-button:hover {
+            background-color: #aa992e;
+        }
+
+        a.cancel-button {
+            display: inline-block;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <form method="post" action="/admin/users/edit/save-user" th:object="${user}">

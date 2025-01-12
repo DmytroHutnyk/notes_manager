@@ -57,6 +57,11 @@ public class StatusService implements IStatusService{
         return statusMapper.statusToDTO(status);
     }
 
+    public Status findByName(String name){
+        return statusRepository.findByName(name).orElse(null);
+
+    }
+
     public Page<StatusDTO> getStatusesWithPaginationAndSorting(int page, int size, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);

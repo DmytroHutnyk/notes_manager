@@ -20,9 +20,10 @@ public class Status {
 
     @NotBlank(message = "Status name cannot be blank")
     @Size(max = 50, message = "Status name cannot exceed 50 characters")
+    @Column(nullable = false)
     private String name;
 
-    @ManyToMany(mappedBy = "statusSet")
+    @ManyToMany(mappedBy = "statusSet", cascade = CascadeType.ALL)
     private Set<Note> noteSet;
 
     public Status(Set<Note> noteSet, String name) {

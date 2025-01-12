@@ -18,9 +18,15 @@ public class SecurityConfig  {
     @SneakyThrows
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         http
+//                .authorizeHttpRequests(authorizeRequest ->
+//                        authorizeRequest
+//                                .requestMatchers("/auth/**","/admin/**", "/error", "/db/**", "/", "/save-user/**").permitAll()
+//                                .anyRequest().authenticated()
+//                )
                 .authorizeHttpRequests(authorizeRequest ->
-                        authorizeRequest
-                                .requestMatchers("/auth/**","/admin/**", "/error", "/db/**", "/", "/save-user/**").permitAll()
+                 authorizeRequest
+                .requestMatchers("/admin/**").hasRole("ADMIN")
+                                .requestMatchers("/auth/**", "/error", "/db/**", "/", "/save-user/**").permitAll()//TODO save user???!!!
                                 .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf

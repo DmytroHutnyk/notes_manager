@@ -2,16 +2,66 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Admin Panel Menu</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            background-color: #ffdd00;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            text-align: center;
+            width: 200px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: #aa992e;
+        }
+
+        .red-button {
+            background-color: #ff4c4c;
+            color: black;
+        }
+
+        .red-button:hover {
+            background-color: #cc0000;
+        }
+
+    </style>
 </head>
 <body>
 <h1>Admin Panel</h1>
 <nav>
     <a th:href="@{/admin/users}">Users</a>
     <a th:href="@{/admin/notes}">Notes</a>
-    <a th:href="@{/statuses}">Statuses</a>
-    <br>
-    <a th:href="@{/detailed/note}">Detailed View - Notes</a>
-    <a th:href="@{/detailed/user}">Detailed View - Users</a>
+    <a th:href="@{/admin/statuses}">Statuses</a>
+    <a th:href="@{/admin/detailed/notes}">Detailed View - Notes</a>
+    <a th:href="@{/menu}">Back</a>
+    <a th:href="@{/auth/logout}" class="red-button">Log Out</a>
 </nav>
 </body>
 </html>
