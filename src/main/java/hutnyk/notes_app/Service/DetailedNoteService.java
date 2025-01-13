@@ -6,6 +6,7 @@ import hutnyk.notes_app.Model.Entity.User;
 import hutnyk.notes_app.Model.Entity.Status;
 import hutnyk.notes_app.Service.Interface.IDetailedNoteService;
 import hutnyk.notes_app.Service.Interface.INoteService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class DetailedNoteService implements IDetailedNoteService {
         return notes.stream().map(this::convertToNoteDTO).collect(Collectors.toList());
     }
 
-    private DetailedNoteDTO convertToNoteDTO(Note note) {
+    private DetailedNoteDTO convertToNoteDTO(Note note){
         DetailedNoteDTO dto = new DetailedNoteDTO();
         dto.setId(note.getId());
         dto.setTitle(note.getTitle());

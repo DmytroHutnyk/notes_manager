@@ -75,4 +75,8 @@ public class NoteService implements INoteService {
         Page<Note> notePage = noteRepository.findAll(pageable);
         return notePage.map(noteMapper::noteToDTO);
     }
+
+    public List<Note> getAllNotesByUserId(Long id){
+        return noteRepository.getAllByUserId(id);
+    }
 }

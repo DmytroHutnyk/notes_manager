@@ -33,7 +33,8 @@ public class StatusMapper {
                         statusDTO.getNoteSetId().stream().map(noteId -> noteRepository.findById(noteId).orElseThrow(
                                 () -> new EntityNotFoundException("Note not found with id: " + noteId))).collect(Collectors.toSet()) :
                         null,
-                statusDTO.getName()
+                statusDTO.getName(),
+                statusDTO.getId()
         );
     }
 }

@@ -26,7 +26,7 @@ public class SecurityConfig  {
                 .authorizeHttpRequests(authorizeRequest ->
                  authorizeRequest
                 .requestMatchers("/admin/**").hasRole("ADMIN")
-                                .requestMatchers("/auth/**", "/error", "/db/**", "/", "/save-user/**").permitAll()//TODO save user???!!!
+                                .requestMatchers("/auth/**", "/error", "/db/**", "/", "/save-user/**", "/user/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .csrf(csrf -> csrf

@@ -26,8 +26,9 @@ public class Status {
     @ManyToMany(mappedBy = "statusSet", cascade = CascadeType.ALL)
     private Set<Note> noteSet;
 
-    public Status(Set<Note> noteSet, String name) {
+    public Status(Set<Note> noteSet, String name, Long id) {
         this.noteSet = noteSet;
         this.name = name;
+        this.id = id;
     }
 }

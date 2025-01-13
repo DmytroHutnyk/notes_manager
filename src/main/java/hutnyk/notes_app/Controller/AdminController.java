@@ -1,6 +1,5 @@
 package hutnyk.notes_app.Controller;
 
-import hutnyk.notes_app.Model.DTO.DetailedNoteDTO;
 import hutnyk.notes_app.Model.DTO.StatusDTO;
 import hutnyk.notes_app.Model.Entity.Note;
 import hutnyk.notes_app.Model.Entity.User;
@@ -76,6 +75,7 @@ public class AdminController {
 
     @PostMapping("/users/edit/save-user")
     public String saveUser(@Valid @ModelAttribute User user, BindingResult bindingResult) {
+        userValidator.validate(user, bindingResult);
         if(bindingResult.hasErrors()){
             bindingResult.getAllErrors().forEach(error -> {
                 System.out.println("Error: " + error.getDefaultMessage());

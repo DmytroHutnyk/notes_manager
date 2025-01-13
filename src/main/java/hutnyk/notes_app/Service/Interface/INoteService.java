@@ -17,4 +17,5 @@ public interface INoteService {
     Note getNoteByIdAdmin(Long id);
     Page<NoteDTO> getNotesWithPaginationAndSorting(int page, int size, String sortBy, String sortDir);
     Note addNoteAdmin(Note note);
+    List<Note> getAllNotesByUserId(Long id);
 }

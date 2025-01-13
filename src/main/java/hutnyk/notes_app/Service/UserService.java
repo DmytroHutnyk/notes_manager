@@ -29,7 +29,6 @@ public class UserService implements IUserService, UserDetailsService {
 
     private final IUserRepository userRepository;
     private final UserMapper userMapper;
-//    private final IRoleService roleService;
 
 
 

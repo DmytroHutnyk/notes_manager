@@ -1,5 +1,6 @@
 package hutnyk.notes_app.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
@@ -21,14 +22,13 @@ public class Note {
 
     @NotBlank(message = "Title cannot be blank")
     @Size(max = 100, message = "Title cannot exceed 100 characters")
+    @Column(nullable = false)
     private String title;
 
-    @NotBlank(message = "Description cannot be blank")
     @Size(max = 500, message = "Description cannot exceed 500 characters")
     private String description;
 
-
-//    @FutureOrPresent(message = "Finish date must be in the future or present")
+    @FutureOrPresent(message = "Finish date must be in the future or present")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date finishDate;
 
@@ -42,6 +42,7 @@ public class Note {
             joinColumns = @JoinColumn(name = "note_id"),
             inverseJoinColumns = @JoinColumn(name = "status_id")
     )
+    @JsonIgnore
     private Set<Status> statusSet;
 
     public Note(Set<Status> statusSet, User user, Date finishDate, String title, String description) {

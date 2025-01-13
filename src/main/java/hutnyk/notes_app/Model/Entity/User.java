@@ -1,5 +1,6 @@
 package hutnyk.notes_app.Model.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -36,7 +37,7 @@ public class User {
     private String email;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-//    @Column(nullable = false) //TODO hava a look
+    @JsonIgnore
     private Set<Note> notesSet;
 
     @Enumerated(EnumType.STRING)
@@ -66,13 +67,6 @@ public class User {
                 ", isEnable=" + isEnable +
                 '}';
     }
-    //    @ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
-//    @JoinTable(
-//            name = "user_role",
-//            joinColumns = @JoinColumn(name = "user_id"),
-//            inverseJoinColumns = @JoinColumn(name = "role_id")
-//    )
-//    private Set<Role> roleSet;
 
 
 
