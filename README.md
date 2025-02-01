@@ -98,6 +98,8 @@ Start the application using the `java -jar` command:
  ```bash
   java -jar build/libs/notes_app-0.0.1-SNAPSHOT.jar
   ```
-### 5. Known issues
+### 5. Known issues (work in progress)
 The notes list does not update automatically due to Thymeleaf’s static rendering. 
 Users need to manually refresh the page to see the latest changes.
+
+When attempting to access the admin page without the Admin role, an error is displayed instead of an appropriate message.
