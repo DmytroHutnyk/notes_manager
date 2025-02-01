@@ -1,14 +1,16 @@
 # Notes Manager Web Application
 
 ## Description
-Notes Manager is a web application designed to manage notes. Users can create notes, assign statues to them and a finish date.
-The system supports two predefined user roles, each with specific permissions:
+Notes Manager is a web application designed for efficient note management. Users can create notes, assign statuses, 
+and set completion dates.
+
+The system includes two predefined user roles with specific permissions:
 
 #### Roles description:
-- **User:**  Add, delete notes, modify content and statuses of notes.
-- **Admin:** Full access, and access to admin panel where he can manage created notes and registered users.
+- **User:**  Can create, edit, delete notes, and update their statuses.
+- **Admin:** Has full access, including an Admin Panel for managing notes and registered users.
 
-Users can register with User Role.
+New users can register with the User role by default.
 
 The application is built using the Spring Framework, with Spring Boot for backend development and
 Spring Data JPA for database interaction.
@@ -97,5 +99,5 @@ Start the application using the `java -jar` command:
   java -jar build/libs/notes_app-0.0.1-SNAPSHOT.jar
   ```
 ### 5. Known issues
-In order for notes list to be updated page must be reloaded due to the Thymeleaf static rendering.
-
+The notes list does not update automatically due to Thymeleaf’s static rendering. 
+Users need to manually refresh the page to see the latest changes.
