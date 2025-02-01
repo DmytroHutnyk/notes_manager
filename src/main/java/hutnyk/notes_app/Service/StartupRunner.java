@@ -29,7 +29,7 @@ public class StartupRunner implements CommandLineRunner {
 
     private void listenForExitCommand() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter 'q' to exit the application.\n");
+        System.out.println("Enter 'q' and Enter to exit the application.\n");
 
         while (true) {
             String input = scanner.nextLine().trim();
