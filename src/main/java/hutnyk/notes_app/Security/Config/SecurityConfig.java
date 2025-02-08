@@ -18,11 +18,6 @@ public class SecurityConfig  {
     @SneakyThrows
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         http
-//                .authorizeHttpRequests(authorizeRequest ->
-//                        authorizeRequest
-//                                .requestMatchers("/auth/**","/admin/**", "/error", "/db/**", "/", "/save-user/**").permitAll()
-//                                .anyRequest().authenticated()
-//                )
                 .authorizeHttpRequests(authorizeRequest ->
                  authorizeRequest
                 .requestMatchers("/admin/**").hasRole("ADMIN")
@@ -51,16 +46,4 @@ public class SecurityConfig  {
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/db/**"));
     }
-
-//    @Bean
-//    public WebSecurityCustomizer webSecurityCustomizer() {
-//        return (web) -> web.ignoring()
-//                .requestMatchers("/db/**", "/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/vendor/**","/fonts/**");
-//    }
 }
-//.authorizeHttpRequests(authorizeRequest ->
-//        authorizeRequest
-//        .requestMatchers("/admin/**").hasRole("ADMIN")
-//                                .requestMatchers("/auth/**", "/error", "/db/**", "/", "/save-user/**").permitAll()
-//                                .anyRequest().authenticated()
-//                )
